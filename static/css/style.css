@@ -126,7 +126,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 section { padding: 84px 0 90px; border-bottom: 1.5px solid var(--ink); }
 @media (max-width: 600px) { section { padding: 56px 0 60px; } }
 h2 { margin-top: 14px; font: 500 clamp(34px, 4.4vw, 54px)/1.05 var(--serif); letter-spacing: -.01em; text-wrap: balance; }
-.lede { margin-top: 18px; max-width: 64ch; color: var(--ink-2); font-size: 19px; text-wrap: pretty; }
+.lede { margin-top: 18px; color: var(--ink-2); font-size: 19px; text-wrap: pretty; }
 .lede b { font-weight: 600; color: var(--ink); }
 .lede b.ink-event { color: var(--event-deep); } .lede b.ink-space { color: var(--space); }
 
