@@ -42,7 +42,7 @@ button { font: inherit; color: inherit; }
 button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--event); outline-offset: 2px; }
 
 /* ── hero ─────────────────────────────────────────── */
-.hero { padding: 22px 0 36px; border-bottom: 1.5px solid var(--ink); }
+.hero { padding: 22px 0 36px; border-bottom: 1px solid var(--rule); }
 .hero-grid { max-width: 1240px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: minmax(300px, 1fr) minmax(0, 1.35fr); gap: 40px; align-items: start; }
 .hero-text { padding-top: 6px; }
 .title-block { font-weight: inherit; }
@@ -123,7 +123,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 }
 
 /* ── sections ─────────────────────────────────────── */
-section { padding: 84px 0 90px; border-bottom: 1.5px solid var(--ink); }
+section { padding: 84px 0 90px; border-bottom: 1px solid var(--rule); }
 @media (max-width: 600px) { section { padding: 56px 0 60px; } }
 h2 { margin-top: 14px; font: 500 clamp(34px, 4.4vw, 54px)/1.05 var(--serif); letter-spacing: -.01em; text-wrap: balance; }
 .lede { margin-top: 18px; color: var(--ink-2); font-size: 19px; text-align: justify; hyphens: auto; }
