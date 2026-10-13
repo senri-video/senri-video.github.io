@@ -36,6 +36,7 @@
       </nav>
 
       <ol class="reels" aria-label="Contents">
+        <li><a href="#abstract"><span>00</span>Abstract</a></li>
         <li><a href="#videos"><span>01</span>Ten videos, uncut</a></li>
         <li><a href="#task"><span>02</span>The question</a></li>
         <li><a href="#benchmark"><span>03</span>SENRI-Bench</a></li>
@@ -63,6 +64,14 @@
 </header>
 
 <main>
+
+  <section id="abstract">
+    <div class="wrap">
+      <p class="slug">00 — Abstract</p>
+      <p class="lede">Human memories are organized in a way that connects events with their corresponding spatial contexts. An AI assistant should also be able to memorize and recall the nexus of events and spaces. Thus we introduce <b>SENRI</b>, a task that studies this space–event connection in long, continuous real-life egocentric video. It contains six task types in two directions: <b class="ink-event">Event → Space</b>, which recovers spatial knowledge from event cues, and <b class="ink-space">Space → Event</b>, which retrieves events from regions and trajectories. To evaluate this, we build <b>SENRI-Bench</b>, containing 500 <i>manually annotated</i> multiple-choice questions over 10 uninterrupted <i>self-recorded</i> videos with around 25.3 hours of content. Also, we evaluate three typical long video understanding paradigms: direct perception, evidence seeking, and persistent memory. The task remains challenging across all three paradigms, highlighting substantial room for improvement.</p>
+      <p class="lede">Then we show two representative failure modes of existing memory methods and address these evidence gaps with <b>SENRI-Agent</b>, a controller that uses <i>Target-Guided Visual Check (TGVC)</i> to propose local visual check tasks for parallel verifiers and integrate the reports into a working memory to help with reasoning. Built upon existing memory systems, SENRI-Agent improves the performance of existing baselines without modifying their stored memories. We hope SENRI will provide valuable insights into how real-life egocentric understanding should be evaluated, reveal the gaps in existing approaches, and offer a possible direction for improvement.</p>
+    </div>
+  </section>
 
   <section id="videos">
     <div class="wrap">
