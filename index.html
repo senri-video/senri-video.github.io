@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SENRI: Space–Event Nexus in Real-Life Videos</title>
+<meta name="description" content="SENRI studies how events stay bound to the places where they happened, in long, uninterrupted, real-life egocentric video. A benchmark in ten long takes, an evaluation of 28 configurations, and SENRI-Agent.">
+<meta property="og:title" content="SENRI: Understanding the Space–Event Nexus in Real-Life Videos">
+<meta property="og:description" content="Where was I when it happened? What happened when I was there? 500 questions over 25.3 hours of one-take egocentric video.">
+<meta property="og:image" content="static/frames/v01/10.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <h1 class="title-block"><span class="title" data-text="SENRI">SENRI</span><span class="subtitle">Understanding the <span class="ink-space">Space</span>–<span class="ink-event">Event</span> Nexus in Real-Life Videos</span></h1>
+      <p class="epigraph">“Memories are motionless, and the more securely they are fixed in space, the sounder they are.”<span>Gaston Bachelard, The Poetics of Space</span></p>
+
+      <p class="authors">
+        Kehan Lan<sup>1,2</sup>, Kaining Ying<sup>1,2</sup>, Henghui Ding<sup>1</sup>, Kaipeng Zhang<sup>2†</sup>
+      </p>
+      <p class="affil"><sup>1</sup>Fudan University · <sup>2</sup>Alaya Lab · <sup>†</sup>corresponding</p>
+
+      <!-- TODO: replace "#" with the real links once available -->
+      <nav class="links" aria-label="Paper links">
+        <a href="#">Paper</a>
+        <a href="#">arXiv</a>
+        <a href="#">Code</a>
+        <a href="#">SENRI-Bench</a>
+        <a href="#bibtex">BibTeX</a>
+      </nav>
+
+      <ol class="reels" aria-label="Contents">
+        <li><a href="#videos"><span>01</span>Ten videos, uncut</a></li>
+        <li><a href="#task"><span>02</span>The question</a></li>
+        <li><a href="#benchmark"><span>03</span>SENRI-Bench</a></li>
+        <li><a href="#results"><span>04</span>Results</a></li>
+        <li><a href="#failures"><span>05</span>Why memory fails</a></li>
+        <li><a href="#agent"><span>06</span>SENRI-Agent</a></li>
+      </ol>
+    </div>
+
+    <figure class="cube" aria-labelledby="cube-q">
+      <div class="cube-stage">
+        <svg id="cube" viewBox="0 0 640 560" role="img" aria-label="A space–time cube. The floor is a map with a river, a bench, a canal and a subway entrance. The camera’s path rises through time as one line; pauses are vertical strokes."></svg>
+        <p class="cube-hint" aria-hidden="true">drag to turn</p>
+      </div>
+      <div class="cube-ctl" role="tablist" aria-label="Question direction">
+        <button role="tab" data-mode="es" aria-selected="true"><span class="sw sw-event"></span>Event → Space</button>
+        <button role="tab" data-mode="se" aria-selected="false"><span class="sw sw-space"></span>Space → Event</button>
+      </div>
+      <div class="cube-qa" aria-live="polite">
+        <p class="qa-q" id="cube-q"></p>
+        <p class="qa-a" id="qa-a"></p>
+      </div>
+    </figure>
+  </div>
+</header>
+
+<main>
+
+  <section id="videos">
+    <div class="wrap">
+      <p class="slug">01 — Ten videos, uncut</p>
+      <h2>A day is not a playlist of clips</h2>
+      <p class="lede">Each video in SENRI-Bench is one uninterrupted take from a chest-mounted camera, about two and a half hours long. Nothing is cut away: the walk from the park to the subway, the escalator between floors and the street outside the restaurant all stay in the footage. Below is the contact sheet for each video, with twenty frames per take.</p>
+
+      <div class="player">
+        <div class="screen">
+          <img id="video-frame" src="static/frames/v01/01.jpg" alt="" width="640" height="360">
+          <p class="burn" id="video-burn">VIDEO 01 · FR 01/20</p>
+          <button class="play" id="video-play" type="button" aria-label="Pause"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="i-pause" d="M3 2h2v8H3zM7 2h2v8H7z"/><path class="i-play" d="M3.5 2l6 4-6 4z"/></svg></button>
+        </div>
+        <div class="sheet" id="video-reel" role="group" aria-label="Contact sheet of the selected video"></div>
+        <div class="takes" id="video-thumbs" role="tablist" aria-label="Choose a video"></div>
+        <p class="note">Faces and scene text are blurred.</p>
+
+        <div class="interrog" aria-live="polite">
+          <div class="iq-head">
+            <p class="iq-title" id="iq-title">Six questions about Video 01</p>
+            <div class="iq-tabs" id="iq-tabs" role="tablist" aria-label="Task type"></div>
+          </div>
+          <p class="iq-q" id="iq-q"></p>
+          <ol class="iq-opts" id="iq-opts"></ol>
+          <p class="note" id="iq-note">Pick an answer to reveal the correct one. The frames above are sampled across the whole video, not the evidence for these questions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="task">
+    <div class="wrap">
+      <p class="slug">02 — The question</p>
+      <h2>What happened, and where</h2>
+      <p class="lede">We remember an afternoon by tying what happened to where it happened. SENRI asks a model to do the same, in two directions. <b class="ink-event">Event → Space</b> starts from something that happened and recovers its spatial context. <b class="ink-space">Space → Event</b> starts from a place or a route and asks what happened there. Each question has four options, and the person who recorded the video wrote it.</p>
+
+      <div class="dirs">
+        <div class="dir">
+          <p class="dir-head"><span class="ink-event">Event → Space</span><span class="dir-n">334 questions</span></p>
+          <div class="chips" role="tablist" aria-label="Event to Space tasks">
+            <button class="chip" role="tab" data-task="loc">Localization <i>89</i></button>
+            <button class="chip" role="tab" data-task="rr">Relation reasoning <i>90</i></button>
+            <button class="chip" role="tab" data-task="oc">Object counting <i>86</i></button>
+            <button class="chip" role="tab" data-task="np">Navigation planning <i>69</i></button>
+          </div>
+        </div>
+        <div class="dir">
+          <p class="dir-head"><span class="ink-space">Space → Event</span><span class="dir-n">166 questions</span></p>
+          <div class="chips" role="tablist" aria-label="Space to Event tasks">
+            <button class="chip" role="tab" data-task="rer">Region-conditioned retrieval <i>88</i></button>
+            <button class="chip" role="tab" data-task="ter">Trajectory retrieval <i>78</i></button>
+          </div>
+        </div>
+      </div>
+
+      <article class="example" aria-live="polite">
+        <div class="example-media"><img id="ex-img" src="static/img/task_rr.jpg" alt="" width="960" height="638"></div>
+        <div class="example-body">
+          <p class="qa-kind" id="ex-kind"></p>
+          <p class="example-q" id="ex-q"></p>
+          <ol class="options" id="ex-opts"></ol>
+          <p class="note">Evidence frames from the original video, in temporal order.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <div class="wrap">
+      <p class="slug">03 — SENRI-Bench</p>
+      <h2>Recorded by the one who asks</h2>
+      <div class="credits">
+        <div><h3>One take</h3><p>Ten videos recorded in malls, museums, restaurants, parks, campuses, streets and public transit, with nothing cut. The transitions between places stay in the video.</p></div>
+        <div><h3>Newly recorded</h3><p>All footage was collected outside public video repositories, so the evaluated models are unlikely to have seen it during pretraining.</p></div>
+        <div><h3>First-hand questions</h3><p>The person who recorded each video wrote its 50 questions, each with three challenging distractors. An independent verifier checked every question against the full video.</p></div>
+      </div>
+
+      <dl class="ledger">
+        <div><dt>Footage</dt><dd>25.3<span>h</span></dd></div>
+        <div><dt>Questions</dt><dd>500</dd></div>
+        <div><dt>Takes</dt><dd>10</dd></div>
+        <div><dt>Task types</dt><dd>6</dd></div>
+      </dl>
+
+      <h3 class="table-title">Against existing benchmarks</h3>
+      <div class="table-scroll">
+        <table class="compare">
+          <thead>
+            <tr><th scope="col">Benchmark</th><th scope="col">Anno.</th><th scope="col">Self-recorded</th><th scope="col">One-take</th><th scope="col">Real-life</th><th scope="col">Cross-scene</th><th scope="col">Event-grounded</th><th scope="col">Spatial reasoning</th><th scope="col" class="num">Avg. h / clip</th></tr>
+          </thead>
+          <tbody id="compare-body"></tbody>
+        </table>
+      </div>
+      <p class="note">Anno.: A = automatic, M = manual, A/M = mixed pipeline.</p>
+
+      <div class="prints">
+        <figure><img src="static/img/task_distribution.png" alt="Task distribution: Event to Space 334 questions, Space to Event 166" loading="lazy"><figcaption>task distribution</figcaption></figure>
+        <figure><img src="static/img/option_distribution.png" alt="Correct answer positions: 130 A, 130 B, 120 C, 120 D" loading="lazy"><figcaption>answer positions</figcaption></figure>
+        <figure><img src="static/img/benchmark_questions_wordcloud_en.png" alt="Word cloud of question text" loading="lazy"><figcaption>questions</figcaption></figure>
+        <figure><img src="static/img/benchmark_options_wordcloud_en.png" alt="Word cloud of answer options" loading="lazy"><figcaption>options</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="wrap">
+      <p class="slug">04 — Results</p>
+      <h2>No one remembers the way well</h2>
+      <p class="lede">We evaluate 28 configurations across three paradigms: <b>direct perception</b> over sampled frames, <b>evidence seeking</b> agents that search the video with tools, and <b>persistent memory</b> systems that build memories first and reason over them afterwards.</p>
+
+      <div class="findings">
+        <div><span class="big">59.0<span>%</span></span><p>Best overall, from VideoARM with Gemini 3.7 Flash. No baseline reaches 60%.</p></div>
+        <div><span class="big">25<span>/28</span></span><p>configurations do worse on <span class="ink-event">Event → Space</span> than on <span class="ink-space">Space → Event</span>. <i>Where</i> is the harder question.</p></div>
+        <div><span class="big">+11–17</span><p>points come from swapping only the inference model while keeping the same memories.</p></div>
+      </div>
+
+      <div class="chart">
+        <div class="chart-head">
+          <p class="chart-title">Accuracy on SENRI-Bench</p>
+          <div class="seg" role="group" aria-label="Metric">
+            <button class="chip" data-metric="total" aria-pressed="true">Overall</button>
+            <button class="chip" data-metric="es" aria-pressed="false">Event → Space</button>
+            <button class="chip" data-metric="se" aria-pressed="false">Space → Event</button>
+          </div>
+        </div>
+        <div class="bars" id="bars"></div>
+        <details class="data-table">
+          <summary>Show as table</summary>
+          <div class="table-scroll"><table id="results-table"><thead><tr><th>Paradigm</th><th>Method</th><th>Inference model</th><th class="num">Overall</th><th class="num">E → S</th><th class="num">S → E</th></tr></thead><tbody></tbody></table></div>
+          <p class="note"><sup>*</sup> Backbone further fine-tuned or post-trained by the method.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="failures">
+    <div class="wrap">
+      <p class="slug">05 — Why memory fails</p>
+      <h2>The right moment, the wrong detail</h2>
+      <p class="lede">Suppose the question is how many rows the shelf had where I picked up the Labubu figure. A system has to link that event to one particular shelf. Existing memory systems find the right moment but miss the detail that decides the answer.</p>
+      <figure class="print wide"><img src="static/img/Failure.jpg" alt="Two failure modes: text memory retrieves related events from other places; visual memory frames miss the shelf structure" loading="lazy"></figure>
+      <div class="pair">
+        <div><h3><span class="num-i">i.</span> Text memory loses the place</h3><p>Retrieval finds plausible moments of picking something up, but two of them happened elsewhere and the third carries no spatial detail.</p></div>
+        <div><h3><span class="num-i">ii.</span> Visual memory loses the detail</h3><p>The retrieved frames show the right store and even the moment itself, but they are sampled too sparsely to show the shelf’s structure.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agent">
+    <div class="wrap">
+      <p class="slug">06 — SENRI-Agent</p>
+      <h2>Go back, and look with a purpose</h2>
+      <p class="lede">SENRI-Agent adds a <code>verify</code> action to the usual search-and-answer loop. <b>Target-Guided Visual Check</b> turns retrieved memories into precise checks over short windows of the original video: which occurrence to look at, and which visual fact to confirm. Parallel verifiers report only what they can see. A bounded <b>working memory</b> keeps the useful reports, with their evidence frames, for the next round.</p>
+      <figure class="print wide"><img src="static/img/senri_agent.png" alt="Diagram: previous workflow alternates search and answer over persistent memory; SENRI-Agent adds verify, targeted checks, parallel verifiers and a working memory" loading="lazy"></figure>
+
+      <div class="agent-grid">
+        <div class="chart">
+          <p class="chart-title">Same memories, better answers</p>
+          <p class="chart-sub">Overall accuracy (%), with stored memories and retrieval unchanged.</p>
+          <div class="legend" aria-hidden="true"><span><i class="lg lg-orig"></i>original workflow</span><span><i class="lg lg-agent"></i>with SENRI-Agent</span></div>
+          <div class="dumbbells" id="dumbbells"></div>
+        </div>
+        <div class="chart">
+          <p class="chart-title">Every part matters</p>
+          <p class="chart-sub">Ablation on MAGIC-Video with Qwen3.8-27B.</p>
+          <table class="ablation">
+            <thead><tr><th>Variant</th><th class="num">Overall</th><th class="num">Δ</th></tr></thead>
+            <tbody>
+              <tr class="full"><td>SENRI-Agent</td><td class="num">47.8</td><td class="num">–</td></tr>
+              <tr><td>w/o target guidance</td><td class="num">45.0</td><td class="num">−2.8</td></tr>
+              <tr><td>w/o parallel verifiers</td><td class="num">45.0</td><td class="num">−2.8</td></tr>
+              <tr><td>w/o working memory</td><td class="num">44.0</td><td class="num">−3.8</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bibtex">
+    <div class="wrap narrow">
+      <p class="slug">Citation</p>
+      <div class="bib">
+        <button class="copy" id="copy-bib" type="button">copy</button>
+<pre id="bib-text"><code>@article{lan2026senri,
+  title   = {SENRI: Understanding the Space--Event Nexus in Real-Life Videos},
+  author  = {Lan, Kehan and Ying, Kaining and Ding, Henghui and Zhang, Kaipeng},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="fin">
+  <p class="fin-end">fin</p>
+  <p class="fin-credit">SENRI · Fudan University &amp; Alaya Lab</p>
+</footer>
+
+<div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+<script src="static/js/questions.js"></script>
+<script src="static/js/main.js"></script>
+</body>
+</html>
