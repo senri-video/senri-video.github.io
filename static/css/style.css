@@ -66,7 +66,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .reels a:hover { color: var(--event-deep); }
 @media (max-width: 900px) { .reels { display: none; } }
 @media (max-width: 600px) {
-  .links { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; border-width: 1.5px 0 0 1.5px; }
+  .links { display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; border-width: 1.5px 0 0 1.5px; }
   .links a { text-align: center; white-space: nowrap; padding: 9px 4px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
   .links a:last-child { border-right: 1.5px solid var(--ink); }
 }
